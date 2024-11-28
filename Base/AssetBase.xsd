@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="uri:ea.com:eala:asset" xmlns:at="uri:ea.com:eala:asset:type" xmlns:xas="uri:ea.com:eala:asset:schema" targetNamespace="uri:ea.com:eala:asset" elementFormDefault="qualified" xmlns:XmlEdit="http://tempuri.org/XmlEdit.xsd">
+	<!-- 基础资产类型 -->
 	<xs:complexType name="BaseAssetType">
 		<xs:annotation>
-			<xs:documentation>Base type for all assets</xs:documentation>
+			<xs:documentation>一切资产的基础类型</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 		</xs:sequence>
@@ -14,7 +15,7 @@
 		<xs:complexContent>
 			<xs:extension base="BaseAssetType">
 				<xs:annotation>
-					<xs:documentation>Inheritable base type for all assets</xs:documentation>
+					<xs:documentation>一切资产的可继承基础类型</xs:documentation>
 				</xs:annotation>
 				<xs:sequence>
 				</xs:sequence>
@@ -30,7 +31,7 @@
 	</xs:complexType>
 	<xs:simpleType name="HashCode">
 		<xs:annotation>
-			<xs:documentation>Type to represent 8 digit hexadecimal values</xs:documentation>
+			<xs:documentation>8位16进制类型</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:length value="8" fixed="true" />
@@ -39,7 +40,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="InstanceId">
 		<xs:annotation>
-			<xs:documentation>Type for instance names</xs:documentation>
+			<xs:documentation>实例名称类型</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9a-zA-Z_.-]+" />
@@ -71,7 +72,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Poid" xas:isWeakRef="true">
 		<xs:annotation>
-			<xs:documentation>"Pipeline Object Id", can be used as an identifier for any complexType in the pipeline</xs:documentation>
+			<xs:documentation>管线对象ID "Pipeline Object Id", 可以被用作管线中的一切复杂类型的标识</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9a-zA-Z/_.%@#$^\(\) \-\?&amp;&quot;&lt;&gt;\+\!]+" />

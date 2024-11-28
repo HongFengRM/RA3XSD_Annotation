@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="uri:ea.com:eala:asset:gamedata" targetNamespace="uri:ea.com:eala:asset:gamedata" elementFormDefault="qualified">
-
+<!-- 游戏数据类型 -->
 	<xs:simpleType name="Bool">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="true" />
