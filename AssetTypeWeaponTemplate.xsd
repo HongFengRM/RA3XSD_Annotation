@@ -2,12 +2,14 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:balance="uri:ea.com:eala:balance" xmlns="uri:ea.com:eala:asset" xmlns:at="uri:ea.com:eala:asset:type"
 	xmlns:xas="uri:ea.com:eala:asset:schema" targetNamespace="uri:ea.com:eala:asset" elementFormDefault="qualified"
 	xmlns:XmlEdit="http://tempuri.org/XmlEdit.xsd">
-
+<!-- 资产类型——武器模板 -->
+<!-- 这玩意还蛮重要的 -->
 	<xs:complexType name="RangeReal">
 		<xs:sequence></xs:sequence>
 		<xs:attribute name="Min" type="SageReal" default="0"/>
 		<xs:attribute name="Max" type="SageReal" default="0"/>
 	</xs:complexType>
+
 	<xs:complexType name="RangeDuration">
 		<xs:sequence></xs:sequence>
 		<xs:attribute name="MinSeconds" balance:field="MinSeconds" type="Time" default="0s"/>
@@ -26,10 +28,13 @@
 			<xs:enumeration value="NOT_ATTRACTED_BY_MAGNETS" />
 			<xs:enumeration value="CRUSH_VEHICLE" />
 			<!-- this blocks the AI so that nothing can happen once the unit begins shooting until it has emptied its clip.  dont give this an unlimited clip plz -->
+			<!-- 这屏蔽了AI所以从开始设计直到clip耗尽都不会发生任何事！不要把这个给一个无限clip，谢谢 -->
 			<xs:enumeration value="FORCE_EMPTY_ENTIRE_CLIP" />
 			<!-- the tells the weapon not to check relationship flags if it is hitting a wall (intended for crush weapons) -->
+			<!-- 这告诉武器不要检查他是否在击打一个墙，给碾压武器的 -->
 			<xs:enumeration value="IGNORE_WALL_RELATIONSHIP"/>
 			<!-- Used by final squadron aircraft to grab a target inside the nanoswarm hive and fly into it, exploding against the hive -->
+			<!-- 给决胜中队的，可以得到一个纳米虫群里的目标然后创上去，撞死在虫群上 -->
 			<xs:enumeration value="IGNORE_ENCLOSURE_CHECK"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -180,17 +185,21 @@
 	</xs:simpleType>
 
 	<!-- Stuff for the AI to help it figure out which weapon to use against a target -->
+	<!-- 告诉AI搞清楚他要用什么武器攻击目标 -->
 	<xs:complexType name="WeaponAiHintInfo" >
 		<xs:sequence />
 		<!-- If true, use this against garrisoned buildings -->
+		<!-- 用来殴打驻军 -->
 		<xs:attribute name="IsAntiGarrisonWeapon" type="SageBool" default="false" />
 
 		<!-- If the target's locomotor's max speed is greater than MaxSpeedOfTarget, avoid using this weapon because it will miss -->
+		<!-- 不会打跑的比这个快的 -->
 		<xs:attribute name="MaxSpeedOfTarget" type="SageReal" use="optional" />
 		
 		<!-- Use special code which handles long lock-on delays; that is, weapons that have a long preattack delay
 			   which is paid ONCE when starting to attack a target. (e.g. Javelin Soldier in Radar Lock mode, where 
 			   he needs a long time to lock onto the target. Or Athena Cannon) -->
+		<!-- 长前摇武器专属代码 -->
 		<xs:attribute name="UseLongLockOnTimeCode" type="SageBool" default="false" />
 
 		<!-- Normally, when the AI is calculating the power of a weapon, we notice when a weapon is a projectile and 
@@ -819,6 +828,10 @@
 			/>
 		</xs:choice>
 	</xs:complexType>
+
+
+
+<!-- 重要！ 这里是神秘的武器模板本体 -->
 
 	<xs:complexType name="WeaponTemplate" xas:runtimeWrapper="::WeaponTemplate" xas:typeGroup="Tokenized">
 		<xs:complexContent>

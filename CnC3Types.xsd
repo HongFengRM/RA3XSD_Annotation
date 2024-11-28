@@ -635,7 +635,7 @@
 
   <xs:element name="AssetDeclaration">
 		<xs:annotation>
-			<xs:documentation>Root level element for all asset declarations</xs:documentation>
+			<xs:documentation>一切资产声明的根元素</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -652,6 +652,9 @@
 				</xs:element>
 				<xs:element name="Includes"
 										minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Include特定的xml文件到本资产声明中</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="Include"
@@ -674,10 +677,16 @@
 				</xs:element>
 				<xs:choice minOccurs="0"
 									 maxOccurs="unbounded">
+
+					<!-- 从这里开始列举一级元素 -->
 					<!-- Pipeline test types START -->
 					<!-- DO NOT REMOVE -->
 					<xs:element name="TestGameObject"
-											type="TestGameObject"/>
+											type="TestGameObject">
+						<xs:annotation>
+							<xs:documentation>测试游戏对象</xs:documentation>
+						</xs:annotation>						
+					</xs:element>
 					<xs:element name="TestTexture"
 											type="TestTexture"/>
 					<xs:element name="TestTextureCollection"

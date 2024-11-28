@@ -1,1 +1,6 @@
 # RA3XSD_Annotation
+
+本项目旨在通过为RA3原版XSD定义文件添加注解，以帮助VSC在modder编辑XML文件时给出有帮助性的中文文本，帮助新手modder快速上手RA3mod的制作。  
+此外，本项目亦期待能作为基于XSD生成静态网页wiki网站的基础性工作，最终建设一个动态的RA3xmlwiki网站。  
+
+本项目的注解均遵循标准XSD注释格式。
