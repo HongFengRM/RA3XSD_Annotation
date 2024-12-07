@@ -635,12 +635,27 @@
 
   <xs:element name="AssetDeclaration">
 		<xs:annotation>
-			<xs:documentation>一切资产声明的根元素</xs:documentation>
+			<xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 一切资产声明的根元素<br>
+
+			RA3的MOD所使用的XML文件均包含这一根元素<br>
+			一般习惯称这一元素为根元素或零级元素，其子元素称之为一级元素。
+
+			]]>
+			</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Tags"
-										minOccurs="0">
+				
+										minOccurs="0">										
+					<xs:annotation><xs:documentation xml:Language="zh-Hans">
+						<![CDATA[
+						# Tags元素<br>
+						具体作用不明，原版XML中一般留作空元素。
+						]]>
+					</xs:documentation></xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="Tag"
@@ -652,15 +667,27 @@
 				</xs:element>
 				<xs:element name="Includes"
 										minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>Include特定的xml文件到本资产声明中</xs:documentation>
-					</xs:annotation>
+					<xs:annotation><xs:documentation xml:Language="zh-Hans">
+						<![CDATA[
+						# Include指定的xml文件到本文件中<br>
+
+						有几种写法，当前区别不明，建议照着原版的写。
+
+						]]>
+					</xs:documentation></xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="Include"
 													type="Include"
 													minOccurs="0"
-													maxOccurs="unbounded" />
+													maxOccurs="unbounded" >
+								<xs:annotation><xs:documentation xml:Language="zh-Hans">
+								<![CDATA[
+								# Include指定的xml文件到本文件中<br>
+								有几种写法，当前区别不明，建议照着原版的写。
+								]]>
+								</xs:documentation></xs:annotation>					
+							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -676,140 +703,564 @@
 					</xs:complexType>
 				</xs:element>
 				<xs:choice minOccurs="0"
-									 maxOccurs="unbounded">
+									 maxOccurs="unbounded"/>
 
 					<!-- 从这里开始列举一级元素 -->
 					<!-- Pipeline test types START -->
 					<!-- DO NOT REMOVE -->
 					<xs:element name="TestGameObject"
 											type="TestGameObject">
-						<xs:annotation>
-							<xs:documentation>测试游戏对象</xs:documentation>
-						</xs:annotation>						
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 测试游戏对象<br>
+							一级元素（资产），不明。
+							]]>
+						</xs:documentation></xs:annotation>							
 					</xs:element>
 					<xs:element name="TestTexture"
-											type="TestTexture"/>
+											type="TestTexture">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 测试贴图<br>
+							一级元素（资产），不明。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="TestTextureCollection"
 											type="TestTextureCollection"/>
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 测试贴图集合<br>
+							一级元素（资产），不明。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<!-- Pipeline test types END -->
+					<!-- 管线测试类型结束 -->
 										
 					<xs:element name="WeaponTemplate"
-											type="WeaponTemplate" />
+											type="WeaponTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 武器模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="LocomotorTemplate"
-											type="LocomotorTemplate" />
+											type="LocomotorTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 移动方式模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="GameObject"
 											balance:category="Game Object"
-											type="GameObject"/>
+											type="GameObject">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 游戏对象<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="FXParticleSystemTemplate"
-											type="FXParticleSystemTemplate" />
+											type="FXParticleSystemTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 粒子系统模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="Weather"
-											type="Weather"/>
+											type="Weather">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 天气<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="ShadowMap"
-											type="ShadowMap"/>
+											type="ShadowMap">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测）影子映射<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="WaterTransparency"
-											type="WaterTransparency"/>
+											type="WaterTransparency">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测）水透明度<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="WaterSetting"
-											type="WaterSetting"/>
+											type="WaterSetting">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 水设置<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="WaterTextureList"
-											type="WaterTextureList"/>
+											type="WaterTextureList">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 水材质列表<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="UnitAbilityButtonTemplate"
-											type="UnitAbilityButtonTemplate"/>
+											type="UnitAbilityButtonTemplate">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 单位能力按钮模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PlayerPowerButtonTemplate"
-											type="PlayerPowerButtonTemplate"/>
+											type="PlayerPowerButtonTemplate">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 水设置<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="Texture"
-											type="Texture"/>
+											type="Texture">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 材质<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="OnDemandTexture"
-											type="OnDemandTexture"/>
+											type="OnDemandTexture">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 需要的材质<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="W3DMesh"
-											type="W3DMesh"/>
+											type="W3DMesh">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# W3D网格<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="W3DContainer"
-											type="W3DContainer"/>
+											type="W3DContainer">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# W3D容器<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="W3DHierarchy"
-											type="W3DHierarchy"/>
+											type="W3DHierarchy">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# W3D层级<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="W3DAnimation"
-											type="W3DAnimation"/>
+											type="W3DAnimation">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# W3D动画<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="W3DCollisionBox"
-											type="W3DCollisionBox"/>
+											type="W3DCollisionBox">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# W3D碰撞箱<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="ShaderOverride"
-											type="ShaderOverride"/>
+											type="ShaderOverride">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# W3D网格<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="ArmyDefinition"
-											type="ArmyDefinition" />
+											type="ArmyDefinition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 军队定义<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIPersonalityDefinition"
-											type="AIPersonalityDefinition" />
+											type="AIPersonalityDefinition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI人格定义<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="FXList"
-											type="FXList" />
+											type="FXList" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 效果列表<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="ObjectCreationList"
-											type="ObjectCreationList" />
+											type="ObjectCreationList" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 对象创建列表（OCL）<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="ObjectFilterAsset"
-											type="ObjectFilterAsset" />
+											type="ObjectFilterAsset" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 对象筛选表资产<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="SpecialPowerTemplate"
-											type="SpecialPowerTemplate" />
+											type="SpecialPowerTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 特殊能力模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="UpgradeTemplate"
-											type="UpgradeTemplate" />
+											type="UpgradeTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 升级模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="SkirmishOpeningMove"
-											type="SkirmishOpeningMove" />
+											type="SkirmishOpeningMove" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 遭遇战开场移动<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIStateDefinition"
-											type="AIStateDefinition" />
+											type="AIStateDefinition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI状态定义<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIStrategicStateDefinition"
-											type="AIStrategicStateDefinition" />
+											type="AIStrategicStateDefinition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI战略状态定义<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIStrategicStateName"
-											type="AIStrategicStateName" />
+											type="AIStrategicStateName" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） AI战略状态名称<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIBudgetStateDefinition"
-											type="AIBudgetStateDefinition" />
+											type="AIBudgetStateDefinition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI预算状态定义<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIBuildStateDefinition"
-											type="AIBuildStateDefinition" />
+											type="AIBuildStateDefinition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI建造状态定义<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AITargetingHeuristic"
-											type="AITargetingHeuristic" />
+											type="AITargetingHeuristic" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） AI目标启发<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AIMicroManagerData"
-											type="AIMicroManagerData" />
+											type="AIMicroManagerData" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI微观管理器数据<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="GameMap"
-											type="GameMap" />
+											type="GameMap" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 游戏地图<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AttributeModifier"
-											type="AttributeModifier" />
+											type="AttributeModifier" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 属性修改器（ATTR）<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="ArmorTemplate"
-											type="ArmorTemplate" />
+											type="ArmorTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 护甲模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MissionTemplate"
-											type="MissionTemplate" />
+											type="MissionTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 任务模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="CampaignTemplate"
-											type="CampaignTemplate" />
+											type="CampaignTemplate" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 比赛模板<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="CampaignEnumerator"
-											type="CampaignEnumerator" />
+											type="CampaignEnumerator" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 比赛计数器<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AudioFile"
-											type="AudioFile" />
+											type="AudioFile" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 音频文件<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AudioFileMP3Passthrough"
-											type="AudioFileMP3Passthrough" />
+											type="AudioFileMP3Passthrough" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 音频文件MP3穿过<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicMap" 
-											type="PathMusicMap" />
+											type="PathMusicMap" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐地图<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicTrack" 
-											type="PathMusicTrack" />
+											type="PathMusicTrack" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐轨<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicEvent"
-											type="PathMusicEvent" />
+											type="PathMusicEvent" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐事件<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicEventSet"
-											type="PathMusicEventSet" />
+											type="PathMusicEventSet" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐事件集合<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicGameDynamicState"
-											type="PathMusicGameDynamicState" />
+											type="PathMusicGameDynamicState" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐游戏动态状态<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicGameDynamicStateSet"
-											type="PathMusicGameDynamicStateSet" />
+											type="PathMusicGameDynamicStateSet" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐游戏动态状态集合<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="PathMusicGameDynamicTransition"
-											type="PathMusicGameDynamicTransition" />
+											type="PathMusicGameDynamicTransition" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 路径音乐游戏动态变换<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AudioEvent"
-											type="AudioEvent" />
+											type="AudioEvent" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 音频事件<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MusicTrack"
-											type="MusicTrack" />
+											type="MusicTrack" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 音乐轨<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MP3MusicTrack"
-											type="MP3MusicTrack" />
+											type="MP3MusicTrack" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# MP3音轨<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="DialogEvent"
-											type="DialogEvent" />
+											type="DialogEvent" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 对话事件<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MP3DialogEvent"
-											type="MP3DialogEvent" />
+											type="MP3DialogEvent" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# MP3对话事件<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="AmbientStream"
-											type="AmbientStream" />
+											type="AmbientStream" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 环境流<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MP3AmbientStream"
-											type="MP3AmbientStream" />
+											type="MP3AmbientStream" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） MP3环境流<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="Multisound"
-											type="Multisound" />
+											type="Multisound" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 多音效<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MusicPalette"
-										  type="MusicPalette" />
+										  type="MusicPalette" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 音乐盘<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MusicScriptConditionNugget_LocalPlayerIsObserver"	
 											type="MusicScriptConditionNugget_LocalPlayerIsObserver" />
 					<xs:element name="MusicScriptConditionNugget_UnitsFarFromBase"	
@@ -857,7 +1308,14 @@
 					<xs:element name="StringHashTable"
 											type="StringHashTable" />
 					<xs:element name="DamageFX"
-											type="DamageFX" />
+											type="DamageFX" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 伤害效果<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MultiplayerSettings"
 											type ="MultiplayerSettings" />
 					<xs:element name="OnlineChatColors"
@@ -889,8 +1347,22 @@
 					<xs:element name="TargetingInTurretArcCompare" type="TargetingInTurretArcCompare" />
 					<xs:element name="Road" type="Road" />
 					<xs:element name="Environment" type="Environment" />
-					<xs:element name="LogicCommand" type="LogicCommand"/>
-					<xs:element name="LogicCommandSet" type="LogicCommandSet"/>
+					<xs:element name="LogicCommand" type="LogicCommand">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 逻辑命令<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
+					<xs:element name="LogicCommandSet" type="LogicCommandSet">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 逻辑命令集合<br>
+							一级元素（资产），待续。
+							]]>
+						</xs:documentation></xs:annotation>							
+					</xs:element>
 					<xs:element name="MiscAudio" type="MiscAudio" />
 					<xs:element name="AnimationSoundSettings" type="AnimationSoundSettings" />
 					<xs:element name="EvaSettings" type="EvaSettings" />

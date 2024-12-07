@@ -2,6 +2,13 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="uri:ea.com:eala:asset:gamedata" targetNamespace="uri:ea.com:eala:asset:gamedata" elementFormDefault="qualified">
 <!-- 游戏数据类型 -->
 	<xs:simpleType name="Bool">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 布尔类型<br>
+			只能填写true或者false。
+			]]>
+		</xs:documentation></xs:annotation>							
+					
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="true" />
 			<xs:enumeration value="false" />
@@ -9,30 +16,61 @@
 	</xs:simpleType>
 
 	<xs:simpleType name="Modifier">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 修改器类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>							
+			
 		<xs:restriction base="xs:string" >
 			<xs:pattern value="[\&amp;\*]*" />
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Identifier">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 标识符类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>			
 		<xs:restriction base="xs:string" >
 			<xs:pattern value="[a-zA-Z_$][a-zA-Z0-9_$]*" />
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="IdentifierOrNothing">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 标识符或者空类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>		
 		<xs:restriction base="xs:string" >
 			<xs:pattern value="([a-zA-Z_$][a-zA-Z0-9_$]*)|" />
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="ParamType">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 参数类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>		
 		<xs:restriction base="xs:string" >
 			<xs:pattern value="((\:\:)?([a-zA-Z_$][a-zA-Z0-9_$]*))+" />
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:complexType name="Parameter">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 参数类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>			
 		<xs:attribute name="name" type="Identifier" />
 		<xs:attribute name="type" type="ParamType" />
 		<xs:attribute name="const" type="Bool" default="false" />
@@ -41,6 +79,12 @@
 	</xs:complexType>
 
 	<xs:complexType name="Function">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 函数类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>		
 		<xs:sequence>
 			<xs:element name="Parameter" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
@@ -50,6 +94,12 @@
 	</xs:complexType>
 	
 	<xs:element name="GameData">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 游戏数据类型<br>
+			不明。
+			]]>
+		</xs:documentation></xs:annotation>		
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Function" type="Function"  minOccurs="0" maxOccurs="unbounded" />

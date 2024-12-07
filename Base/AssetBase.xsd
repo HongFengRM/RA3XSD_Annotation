@@ -2,24 +2,62 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="uri:ea.com:eala:asset" xmlns:at="uri:ea.com:eala:asset:type" xmlns:xas="uri:ea.com:eala:asset:schema" targetNamespace="uri:ea.com:eala:asset" elementFormDefault="qualified" xmlns:XmlEdit="http://tempuri.org/XmlEdit.xsd">
 	<!-- 基础资产类型 -->
 	<xs:complexType name="BaseAssetType">
-		<xs:annotation>
+		<!-- <xs:annotation>
 			<xs:documentation>一切资产的基础类型</xs:documentation>
-		</xs:annotation>
+		</xs:annotation> -->
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 基础资产类型<br>
+			一切Asset的基础类型，所有的奇特资产都根本上继承自该类型。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:sequence>
 		</xs:sequence>
-		<xs:attribute name="id" type="InstanceId" use="required" XmlEdit:Default="UnnamedAsset" />
-		<xs:attribute name="typeHashCode" type="HashCode" use="optional" XmlEdit:Default="00000000" />
-		<xs:attribute name="buildRule" type="BuildRule" />
+		<xs:attribute name="id" type="InstanceId" use="required" XmlEdit:Default="UnnamedAsset" >
+				<xs:annotation><xs:documentation xml:Language="zh-Hans">
+					<![CDATA[
+					# 资产ID<br>
+					该资产的ID。需要具备唯一性。
+					]]>
+				</xs:documentation></xs:annotation>
+		</xs:attribute>
+		
+		<xs:attribute name="typeHashCode" type="HashCode" use="optional" XmlEdit:Default="00000000" >
+				<xs:annotation><xs:documentation xml:Language="zh-Hans">
+					<![CDATA[
+					# 类型的哈希值<br>
+					该资产的八位十六进制哈希值。具体不明，在XML中未使用。
+					]]>
+				</xs:documentation></xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="buildRule" type="BuildRule" >
+				<xs:annotation><xs:documentation xml:Language="zh-Hans">
+					<![CDATA[
+					# （估计）建造规则<br>
+					具体不明，在XML中未使用。
+					]]>
+				</xs:documentation></xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
+
 	<xs:complexType name="BaseInheritableAsset">
 		<xs:complexContent>
 			<xs:extension base="BaseAssetType">
-				<xs:annotation>
-					<xs:documentation>一切资产的可继承基础类型</xs:documentation>
-				</xs:annotation>
+				<xs:annotation><xs:documentation xml:Language="zh-Hans">
+					<![CDATA[
+					# 基础可继承资产<br>
+					是基础资产的扩展，可以指定InheritFrom属性，以继承其他资产的内容。
+					]]>
+				</xs:documentation></xs:annotation>
 				<xs:sequence>
 				</xs:sequence>
 				<xs:attribute name="inheritFrom">
+					<xs:annotation><xs:documentation xml:Language="zh-Hans">
+					<![CDATA[
+					# 继承自<br>
+					指定该资产继承自什么资产。此处填写其他资产的ID。
+					]]>
+					</xs:documentation></xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
 							<xs:pattern value="([0-9a-zA-Z_.-]*:)?[0-9a-zA-Z_.-]*" />
@@ -29,33 +67,55 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+
+
 	<xs:simpleType name="HashCode">
-		<xs:annotation>
-			<xs:documentation>8位16进制类型</xs:documentation>
-		</xs:annotation>
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 哈希数值类型<br>
+			八位十六进制哈希数值。
+			]]>
+			</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:length value="8" fixed="true" />
 			<xs:pattern value="[0-9a-fA-F]{8}" />
 		</xs:restriction>
 	</xs:simpleType>
+
 	<xs:simpleType name="InstanceId">
-		<xs:annotation>
-			<xs:documentation>实例名称类型</xs:documentation>
-		</xs:annotation>
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 实例ID<br>
+			即资产的ID属性中所填写的内容。可以包括字母数字和下划线。
+			]]>
+			</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9a-zA-Z_.-]+" />
 		</xs:restriction>
 	</xs:simpleType>
+
+
 	<xs:simpleType name="BuildRule">
-		<xs:annotation>
-			<xs:documentation>Type for build rules</xs:documentation>
-		</xs:annotation>
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# （猜测）建造规则类型<br>
+			不明。
+			]]>
+			</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string" />
 	</xs:simpleType>
+
+
 	<xs:simpleType name="AssetReference" xas:isRef="true">
-		<xs:annotation>
+		<!-- <xs:annotation>
 			<xs:documentation>Type for internal references to other declared assets</xs:documentation>
-		</xs:annotation>
+		</xs:annotation> -->
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 其他声明了的资产的内部引用类型<br>
+			具体不明。
+			]]>
+			</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string">
 			<!-- The \number at the end isn't ACTUALLY legal, but BAB outputs this for indexing purposes -->
 			<!-- If anyone actually TRIES to use this, the regex will fail because BAB will also add its own -->
@@ -63,53 +123,107 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="WeakReference" xas:isWeakRef="true">
-		<xs:annotation>
+		<!-- <xs:annotation>
 			<xs:documentation>Type for internal references to other declared assets that need to be post-fixed due to ciruclar dependencies</xs:documentation>
-		</xs:annotation>
+		</xs:annotation> -->
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 对于出于循环依赖问题需要前置的其他声明了的资产的内部参考类型<br>
+			具体不明。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9a-zA-Z_.-]*" />
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="Poid" xas:isWeakRef="true">
-		<xs:annotation>
+		<!-- <xs:annotation>
 			<xs:documentation>管线对象ID "Pipeline Object Id", 可以被用作管线中的一切复杂类型的标识</xs:documentation>
-		</xs:annotation>
+		</xs:annotation> -->
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 管线对象ID<br>
+			 "Pipeline Object Id", 可以被用作管线中的一切复杂类型的标识。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9a-zA-Z/_.%@#$^\(\) \-\?&amp;&quot;&lt;&gt;\+\!]+" />
 		</xs:restriction>
 	</xs:simpleType>
+
 	<xs:simpleType name="FileReference">
-		<xs:annotation>
+		<!-- <xs:annotation>
 			<xs:documentation>Type for external references to stand-alone files</xs:documentation>
-		</xs:annotation>
+		</xs:annotation> -->
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 对于外部独立文件的引用类型<br>
+			 不明。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:anyURI" />
 	</xs:simpleType>
+
+
 	<xs:simpleType name="DataBlob">
-		<xs:annotation>
+		<!-- <xs:annotation>
 			<xs:documentation>Pulls in data from external references to stand-alone files,</xs:documentation>
-		</xs:annotation>
+		</xs:annotation> -->
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# （猜测）将外部引用的数据提取到独立文件中<br>
+			 不明。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:restriction base="FileReference" />
 	</xs:simpleType>
+
 	<xs:complexType name="Include">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# Include类型<br>
+			 需要指定包含的类型和包含的源。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:sequence>
 		</xs:sequence>
 		<xs:attribute name="type" type="IncludeType" use="required" />
 		<xs:attribute name="source" type="xs:anyURI" use="required" />
 	</xs:complexType>
+
 	<xs:simpleType name="IncludeType">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# Include类型类型<br>
+			 有引用、实例和全部三种模式。具体区别不明，建议参考原版写法。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="reference" />
 			<xs:enumeration value="instance" />
 			<xs:enumeration value="all" />
 		</xs:restriction>
 	</xs:simpleType>
+
 	<xs:complexType name="Tag">
+			<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# Tag类型<br>
+			 不明。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:sequence>
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" use="required" />
 		<xs:attribute name="tag" type="xs:string" use="required" />
 	</xs:complexType>
 	<xs:complexType name="Define">
+		<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# Define类型<br>
+			 不明。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:attribute name="name" type="xs:string" use="required" />
 		<xs:attribute name="value" type="xs:string" use="required" />
 		<xs:attribute name="override" type="xs:boolean" />

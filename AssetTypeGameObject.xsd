@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="uri:ea.com:eala:asset" xmlns:at="uri:ea.com:eala:asset:type" xmlns:xas="uri:ea.com:eala:asset:schema" xmlns:balance="uri:ea.com:eala:balance" targetNamespace="uri:ea.com:eala:asset" elementFormDefault="qualified" xmlns:XmlEdit="http://tempuri.org/XmlEdit.xsd">
+	<!-- 修复一下飘红 -->
+	<xs:include schemaLocation="./RM_Include_repair.xsd" />
+
+
+
 	<xs:include schemaLocation="GameObject/ThingSort.xsd" />
 	<xs:include schemaLocation="GameObject/RadarPriority.xsd" />
 	<xs:include schemaLocation="SkirmishAI/AssetTypeArmyDefinition.xsd" />
 	<xs:include schemaLocation="SkirmishAI/AIBaseSelectionCriteria.xsd" />
+
+
 	<xs:complexType name="BehaviorModules">
+			<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 行为模块类型<br>
+			待续。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
 			<!-- BEGIN: Absolutely required modules (otherwise bad things will probably happen) -->
+			<!-- 这俩必须得有，不然会坏事 -->
 			<xs:element name="ObjectSMCHelper" type="ObjectSMCHelperModuleData" minOccurs="1" maxOccurs="1" />
 			<xs:element name="ObjectDefectionHelper" type="ObjectDefectionHelperModuleData" minOccurs="1" maxOccurs="1" />
 			<!-- END: Absolutely required modules -->
@@ -379,46 +393,267 @@
 			<xs:element name="BuildCost" type="MoneyTransaction" minOccurs="0" maxOccurs="unbounded" />
 		</xs:choice>
 	</xs:complexType>
+
+
 	<xs:complexType name="GameObject" xas:runtimeWrapper="::ThingTemplate" xas:typeGroup="Tokenized">
+			<xs:annotation><xs:documentation xml:Language="zh-Hans">
+			<![CDATA[
+			# 游戏对象类型<br>
+			一级元素。游戏单位在内的一堆东西都是这个。
+			]]>
+		</xs:documentation></xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="BaseInheritableAsset">
 				<xs:sequence>
-					<xs:element name="DisplayName" type="xs:string" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" />
-					<xs:element name="DisplayNameTransformed" type="xs:string" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" />
-					<xs:element name="GameDependency" type="GameDependencyType" minOccurs="0" maxOccurs="1" />
-					<xs:element name="ObjectResourceInfo" type="ObjectResourceInfo" minOccurs="0" maxOccurs="1" />
-					<xs:element name="ArmorSet" balance:category="Armor Sets" type="ArmorTemplateSet" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Design" />
-					<xs:element name="LocomotorSet" balance:category="Locomotor Sets" type="LocomotorSet" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Engineering" />
-					<xs:element name="Buildable" type="BuildableStatus" minOccurs="0" default="YES" XmlEdit:Category="Engineering" />
-					<xs:element name="ThingClass" type="ThingClassType" minOccurs="0" default="UNSPECIFIED"  XmlEdit:Category="Engineering" />
-					<xs:element name="BuildFadeInOnCreateList" type="StringList" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="BuildVariations" type="StringList" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="EquivalentTo" type="GameObjectWeakRef" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Engineering" />
-					<xs:element name="DisplayColor" type="Color4" minOccurs="0" XmlEdit:Category="Art" />
-					<xs:element name="Flammability" type="Flammability" minOccurs="0" XmlEdit:Category="Design" />
-					<xs:element name="SkirmishAIInformation" type="SkirmishAIInformation" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" />
-					<xs:element name="Draws" type="DrawModules" minOccurs="0" XmlEdit:Category="Art" />
-					<xs:element name="Behaviors" balance:category="Behaviors" type="BehaviorModules" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="AI" type="AIModule" minOccurs="0" xas:byValue="true" XmlEdit:Category="Engineering" />
-					<xs:element name="Body" balance:category="Body" type="BodyModule" minOccurs="1" XmlEdit:Category="Engineering" balance:snapshot="true"/>
-					<xs:element name="ClientUpdates" type="ClientUpdateModules" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="ClientBehaviors" type="ClientBehaviorModules" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="Geometry" type="Geometry" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="ReplaceModule" type="ReplaceModule" minOccurs="0" />
-					<xs:element name="InheritableModule" type="InheritableModule" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="AutoResolveArmor" type="AutoResolveArmor" minOccurs="0" XmlEdit:Category="Engineering" />
+					<xs:element name="DisplayName" type="xs:string" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 显示名称<br>
+							二级元素。填写CSF文件中的字段。
+							单位的名字。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+
+					<xs:element name="DisplayNameTransformed" type="xs:string" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design"  >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 变形后的显示名称<br>
+							二级元素。填写CSF文件中的字段。
+							单位变形后的名字。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="GameDependency" type="GameDependencyType" minOccurs="0" maxOccurs="1"  >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 游戏依赖性<br>
+							二级元素。建造该单位的前置条件。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="ObjectResourceInfo" type="ObjectResourceInfo" minOccurs="0" maxOccurs="1" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 对象资源信息<br>
+							二级元素。建造该单位的资源消耗。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="ArmorSet" balance:category="Armor Sets" type="ArmorTemplateSet" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Design" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 护甲组<br>
+							二级元素。该单位拥有什么护甲。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="LocomotorSet" balance:category="Locomotor Sets" type="LocomotorSet" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 移动方式组<br>
+							二级元素。该单位拥有什么移动方式。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="Buildable" type="BuildableStatus" minOccurs="0" default="YES" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 可建造状态<br>
+							二级元素。该单位能不能被造出来。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="ThingClass" type="ThingClassType" minOccurs="0" default="UNSPECIFIED"  XmlEdit:Category="Engineering">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 东西分类<br>
+							二级元素。不明
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="BuildFadeInOnCreateList" type="StringList" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 在创建列表里褪色建造<br>
+							二级元素。不明
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="BuildVariations" type="StringList" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# （猜测） 建造变种<br>
+							二级元素。不明
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="EquivalentTo" type="GameObjectWeakRef" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 等价于<br>
+							二级元素。该游戏对象等价于什么。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="DisplayColor" type="Color4" minOccurs="0" XmlEdit:Category="Art" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 显示颜色<br>
+							二级元素。不明，无xml使用。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="Flammability" type="Flammability" minOccurs="0" XmlEdit:Category="Design" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 可燃性<br>
+							二级元素。不明，无xml使用。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="SkirmishAIInformation" type="SkirmishAIInformation" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 遭遇战AI信息<br>
+							二级元素。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="Draws" type="DrawModules" minOccurs="0" XmlEdit:Category="Art" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 绘制段<br>
+							二级元素。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="Behaviors" balance:category="Behaviors" type="BehaviorModules" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 行为段<br>
+							二级元素。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="AI" type="AIModule" minOccurs="0" xas:byValue="true" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# AI段<br>
+							二级元素。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="Body" balance:category="Body" type="BodyModule" minOccurs="1" XmlEdit:Category="Engineering" balance:snapshot="true">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 身体段<br>
+							二级元素。主要是血条。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="ClientUpdates" type="ClientUpdateModules" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 客户端更新<br>
+							二级元素。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="ClientBehaviors" type="ClientBehaviorModules" minOccurs="0" XmlEdit:Category="Engineering">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 客户端行为<br>
+							二级元素。播放音效之类，详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="Geometry" type="Geometry" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 几何<br>
+							二级元素。详见其类型分析。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="ReplaceModule" type="ReplaceModule" minOccurs="0" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 代替模块<br>
+							二级元素。未使用、未定义。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="InheritableModule" type="InheritableModule" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 可继承模块<br>
+							二级元素。未使用、未定义。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="AutoResolveArmor" type="AutoResolveArmor" minOccurs="0" XmlEdit:Category="Engineering" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 自动解决装甲<br>
+							二级元素。不明。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
 					<xs:element name="AutoResolveWeapon" type="AutoResolveWeapon" minOccurs="0" XmlEdit:Category="Engineering" />
 					<xs:element name="FormationPreviewDecal" type="FormationPreviewDecal" minOccurs="0" XmlEdit:Category="Art" />
 					<xs:element name="FormationPreviewItemDecal" type="FormationPreviewDecal" minOccurs="0" XmlEdit:Category="Art" />
 					<xs:element name="LiveCameraOffset" type="Vector3" minOccurs="0" XmlEdit:Category="Engineering" />
-					<xs:element name="AudioArrayVoice" type="AudioArrayVoice" minOccurs="0" maxOccurs="1" XmlEdit:Category="Audio" />
-					<xs:element name="AudioArraySound" type="AudioArraySound" minOccurs="0" maxOccurs="1" XmlEdit:Category="Audio" />
-					<xs:element name="EvaEventArray" type="EvaEventArray" minOccurs="0" maxOccurs="1" XmlEdit:Category="Audio" />
-					<xs:element name="UpgradeCameo" type="xs:string" minOccurs="0" maxOccurs="5" XmlEdit:Category="Engineering" />
+					<xs:element name="AudioArrayVoice" type="AudioArrayVoice" minOccurs="0" maxOccurs="1" XmlEdit:Category="Audio">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 音频序列语音<br>
+							二级元素。在这里填写单位语音。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="AudioArraySound" type="AudioArraySound" minOccurs="0" maxOccurs="1" XmlEdit:Category="Audio" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 音频序列音效<br>
+							二级元素。在这里填写单位音效。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="EvaEventArray" type="EvaEventArray" minOccurs="0" maxOccurs="1" XmlEdit:Category="Audio" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# EVA事件序列<br>
+							二级元素。在这里填写EVA事件。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="UpgradeCameo" type="xs:string" minOccurs="0" maxOccurs="5" XmlEdit:Category="Engineering">
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 升级图标<br>
+							二级元素。未使用。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
 					<xs:element name="ShadowInfo" type="ShadowInfo" minOccurs="0" maxOccurs="1" XmlEdit:Category="Engineering" />
 					<xs:element name="AutoResolveInfo" type="AutoResolveInfo" minOccurs="0" maxOccurs="1" />
-					<xs:element name="VisionInfo" balance:category="VisionInfo" type="VisionInfo" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" />
-					<xs:element name="CrusherInfo" balance:category="CrusherInfo" type="CrusherInfo" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" />
+					<xs:element name="VisionInfo" balance:category="VisionInfo" type="VisionInfo" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 视野信息<br>
+							二级元素。填写单位的视野。详见类型。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
+					<xs:element name="CrusherInfo" balance:category="CrusherInfo" type="CrusherInfo" minOccurs="0" maxOccurs="1" XmlEdit:Category="Design" >
+						<xs:annotation><xs:documentation xml:Language="zh-Hans">
+							<![CDATA[
+							# 碾压者信息<br>
+							二级元素。填写单位的碾压等级。详见类型。
+							]]>
+						</xs:documentation></xs:annotation>	
+					</xs:element>
 					<xs:element name="ProjectedBuildabilityInfo" balance:category="ProjectedBuildabilityInfo" type="ProjectedBuildabilityInfo" minOccurs="0" maxOccurs="unbounded" XmlEdit:Category="Design" />
 					<xs:element name="DisplayUpgrade" type="UpgradeTemplateWeakRef" minOccurs="0" maxOccurs="2" XmlEdit:Category="Design" />
 				</xs:sequence>
@@ -569,6 +804,7 @@
 			
 			<!-- Only for structure placement. Note: For type NEAR_RESOURCE_NODE, this is used only if the refinery cannot be placed next 
 				   to a resource node and just gets placed in a base like a normal building -->
+			<!-- 仅适用于结构放置。注意：对于类型 NEAR_RESOURCE_NODE，仅当炼油厂无法放置在资源节点旁边，而只能像普通建筑一样放置在基地中时才使用 -->
 			<xs:element name="ConstructionBaseSelectionCriteria" type="AIBaseSelectionCriteria" minOccurs="0" maxOccurs="1" />
 
 			<!-- Only for NEAR_RESOURCE_NODE structure placement. We first place NEAR_RESOURCE_NODE buildings near resource
@@ -576,9 +812,15 @@
 					 is the one considered closest to the node, so the node closest to that base is the one that will be chosen.
 					 It is **HIGHLY** recommended that all NEAR_RESOURCE_NODE structures has this elements and that the SortOrder
 					 is always set to PREFER_CLOSEST. Otherwise very odd things will happen. -->
+			<!-- 仅适用于 NEAR_RESOURCE_NODE 结构放置。我们首先将 NEAR_RESOURCE_NODE 建筑放置在靠近基地（且远离其他炼油厂）的资源节点附近。
+				根据此标准返回的第一个基地被视为最接近该节点的基地，因此最接近该基地的节点将被选中。
+				**强烈建议**所有 NEAR_RESOURCE_NODE 结构都具有此元素，并且 SortOrder
+				始终设置为 PREFER_CLOSEST。否则会发生非常奇怪的事情。 -->
 			<xs:element name="ResourceNodeBaseClosenessTestSelectionCriteria" type="AIBaseSelectionCriteria" minOccurs="0" maxOccurs="1" />
       <!-- Tells the MicroManager which units should try to dodge this object -->
+      <!-- 告诉微观管理器什么单位需要躲开这个对象 -->
       <xs:element name="DodgeWithUnits" type="ObjectFilter" minOccurs="0" maxOccurs="1"/>
+
 		</xs:sequence>
 		<xs:attribute name="BaseBuildingLocation" type="SkirmishAIBaseLocation" default="FRONT" />
 		<xs:attribute name="AdditionalRotation" type="Angle" default="0r" />
@@ -589,6 +831,10 @@
 				 building it unpacks into cannot be placed because no AI buildings of the appropriate type have been 
 				 destroyed. This is mostly for the AlliedHarvester, which sets this to false so that it can be built
 				 even though there are no destroyed AlliedOutpost 'slots' available. -->
+		<!-- BlockIfUnpackTargetBuildingCannotBeRebuilt：如果战役 UseStructureRebuild 标志处于开启状态（仅在 AI 已有建筑物的位置重建结构），
+		并且此对象的类型为 UNPACK_INTO_BUILDING，并且 BlockIfUnpackTargetBuildingCannotBeRebuilt 为真，
+		则如果由于未摧毁适当类型的 AI 建筑物而无法放置其解包到的建筑物，则拒绝构建此对象。
+		这主要用于 AlliedHarvester，将其设置为 false，以便即使没有可用的已摧毁的 AlliedOutpost“插槽”，也可以建造它。 -->
 		<xs:attribute name="BlockIfUnpackTargetBuildingCannotBeRebuilt" type="SageBool" default="true" />
 		<xs:attribute name="UnitBuilderStandardCombatUnit" type="xs:boolean" default="false" />
 		<xs:attribute name="TargetDuringCrush" type="xs:boolean" default="false" />
@@ -614,6 +860,8 @@
     <xs:attribute name="CanFireUpCliffs" type="SageBool" default="false" />
     <xs:attribute name="DoesSecondaryDamage" type="SageBool" default="false" />
 	</xs:complexType>
+
+
 	<xs:complexType name="ReplaceModule">
 		<xs:sequence>
 		</xs:sequence>
@@ -698,4 +946,3 @@
 		</xs:choice>
 	</xs:complexType>
 </xs:schema>
-

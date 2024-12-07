@@ -2,6 +2,11 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:balance="uri:ea.com:eala:balance" xmlns="uri:ea.com:eala:asset" xmlns:at="uri:ea.com:eala:asset:type"
 	xmlns:xas="uri:ea.com:eala:asset:schema" targetNamespace="uri:ea.com:eala:asset" elementFormDefault="qualified"
 	xmlns:XmlEdit="http://tempuri.org/XmlEdit.xsd">
+<!-- include基础的Type -->
+
+	<xs:include schemaLocation="./RM_Include_repair.xsd"></xs:include>
+
+
 <!-- 资产类型——武器模板 -->
 <!-- 这玩意还蛮重要的 -->
 	<xs:complexType name="RangeReal">

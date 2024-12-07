@@ -1,302 +1,1964 @@
 <?xml version="1.0" encoding="utf-8"?>
   <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="uri:ea.com:eala:asset" xmlns:at="uri:ea.com:eala:asset:type" xmlns:xas="uri:ea.com:eala:asset:schema" targetNamespace="uri:ea.com:eala:asset" elementFormDefault="qualified" xmlns:XmlEdit="http://tempuri.org/XmlEdit.xsd">
-
+<!-- 本文件的documentation内容主要来自小琪的文档 -->
     <xs:simpleType name="KindOfType">
         <xs:restriction base="xs:string">
 
 <xs:enumeration value="OBSTACLE" />
-<xs:enumeration value="SELECTABLE" />
+<xs:enumeration value="SELECTABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可被选择<br>
+		可以被选择，既指可以被点选也指可以被选作攻击目标，配合步兵、载具、建筑可显示该物体血条，
+          进度条等，可以被AI操控
+		]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="TARGETABLE" />
 <xs:enumeration value="ALLY_TARGETABLE" />
-<xs:enumeration value="IMMOBILE" />
-<xs:enumeration value="CAN_ATTACK" />
-<xs:enumeration value="STICK_TO_TERRAIN_SLOPE" />
-<xs:enumeration value="CAN_CAST_REFLECTIONS" />
-<xs:enumeration value="SHRUBBERY" />
-<xs:enumeration value="STRUCTURE" />
-<xs:enumeration value="INFANTRY" />
-<xs:enumeration value="CAVALRY" />
-<xs:enumeration value="MONSTER" />
-<xs:enumeration value="MACHINE" />
-<xs:enumeration value="AIRCRAFT" />
-<xs:enumeration value="HUGE_VEHICLE" />
-<xs:enumeration value="DOZER" />
-<xs:enumeration value="HARVESTER" />
-<xs:enumeration value="COMMANDCENTER" />
-<xs:enumeration value="CASTLE_CENTER" />
-<xs:enumeration value="SALVAGER" />
-<xs:enumeration value="WEAPON_SALVAGER" />
-<xs:enumeration value="TRANSPORT" />
-<xs:enumeration value="BRIDGE" />
+<xs:enumeration value="IMMOBILE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 无法移动<br>
+		]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_ATTACK" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以攻击<br>
+          可以攻击，拥有此类型物体才可按下强制攻击键，苏联战斗工兵虽然有武器却因此不能按强制攻击按钮，
+          但直接ctrl也是有用的
+		]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="STICK_TO_TERRAIN_SLOPE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 紧贴地形<br>
+          紧贴地形坡度，会贴合地形起伏，然而无法被百合子举起
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_CAST_REFLECTIONS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可投影反射<br>
+          可投影反射，很多可生产单位都有，作用不明
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SHRUBBERY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 灌木<br>
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="STRUCTURE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 建筑<br>
+          建筑，展开后会让自身碰撞范围内变成不可建造、不可通行区域，无法右键移动，阻挡武器直线射击，
+          不会被多选框选
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="INFANTRY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 步兵<br>
+          步兵，无法压树木，原版出现于狗、PK、标枪、间谍、谭雅、海豚、武士、帽子、忍者、天使、百合子、
+          A4机场天狗、天皇、熊、动员兵、铁饼、磁暴兵、娜塔莎、蜘蛛、三工兵
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAVALRY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 骑兵<br>
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MONSTER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 怪兽<br>
+          怪兽，仅作为标签，未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MACHINE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 攻城机械<br>
+          攻城机械，仅作为标签，未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="AIRCRAFT"  >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 飞行器<br>
+          飞行器，此类单位无法进入容器，航母小飞机返回母体则为例外(火箭天使蹭进民房原理不明)<br>
+          原版出现于维护者、阿波罗、冷冻、世纪、航母+航母锤小飞机、女神轰炸机、战役伞兵世纪、气球炸弹、
+          神风飞机、火箭天使、双刃、米格、基洛夫、袋狸、各种维修蜂
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HUGE_VEHICLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 巨型载具<br>
+          巨型载具，仅作为标签，未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DOZER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 推土机<br>
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HARVESTER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 矿车<br>
+          采集者，此类物体当框选有其他非采集者单位时则不会被框选，与友军矿车没有碰撞体积，
+          在准备采矿或者回收矿时与矿场矿脉没有碰撞体积
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="COMMANDCENTER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 指挥中心<br>
+          指挥中心，仅作为标签，未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CASTLE_CENTER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 城堡中心<br>
+          城堡中心，仅作为标签，未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SALVAGER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 拾荒者<br>
+          拾荒者，此类物体击杀才会让被击杀物体生成SalvageCrate，
+          并且也只有此类物体才可捡拾SalvageCrate(已变动)
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="WEAPON_SALVAGER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 武器拾荒者<br>
+          武器拾荒者，捡拾SalvageCrate后优先用于升级武器(红警3用途不明)
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="TRANSPORT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 运输载具<br>
+          运输载具，仅作为标签，未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BRIDGE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 桥梁<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="CANT_TOGGLE_POWER" />
-<xs:enumeration value="SIEGE_WEAPON" />
-<xs:enumeration value="PROJECTILE" />
-<xs:enumeration value="PRELOAD" />
-<xs:enumeration value="NO_GARRISON" />
+<xs:enumeration value="SIEGE_WEAPON" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 攻城武器<br>
+          攻城武器，仅作为标签，未发现实际功能，原版出现于雅典娜、航母、波能车、将军舰、V4、无畏舰
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PROJECTILE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 抛射体<br>
+            抛射体，会导致物体的清雾范围无效
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PRELOAD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 预加载<br>
+            预加载，用途不明
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NO_GARRISON" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  不可进驻<br>
+            不可进驻，不被允许进入GarrisonContain，原版出现于狗、海豚、熊、蜘蛛
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="CASTLE_KEEP" />
-<xs:enumeration value="SHADOW_ULTRA_HIGH_ONLY" />
-<xs:enumeration value="NO_COLLIDE" />
+<xs:enumeration value="SHADOW_ULTRA_HIGH_ONLY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  只在极高画质下拥有阴影<br>
+            
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NO_COLLIDE"  >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  无碰撞<br>
+            
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="REPAIR_PAD" />
 <xs:enumeration value="HEAL_PAD" />
-<xs:enumeration value="STEALTH_GARRISON" />
+<xs:enumeration value="STEALTH_GARRISON" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  隐形进驻<br>
+           隐形进驻，有且只有此类单位进驻建筑后可给建筑添加GARRISON_CAN_STEALTH状态以激活建筑的隐形模块让该建筑隐形(ra3失效)
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="SUPPLY_GATHERING_CENTER" />
-<xs:enumeration value="AIRFIELD" />
-<xs:enumeration value="DRAWABLE_ONLY" />
-<xs:enumeration value="MP_COUNT_FOR_VICTORY" />
-<xs:enumeration value="REBUILD_HOLE" />
-<xs:enumeration value="SCORE" />
-<xs:enumeration value="SCORE_CREATE" />
-<xs:enumeration value="SCORE_DESTROY" />
-<xs:enumeration value="NO_HEAL_ICON" />
-<xs:enumeration value="CAN_RAPPEL" />
+<xs:enumeration value="AIRFIELD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  机场<br>
+           机场，需要此来配合ParkingPlaceBehavior模块以停靠JetAI物体
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DRAWABLE_ONLY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 只被绘制 <br>
+          只被绘制，诸如集结点、扫描协议选择地点等都属于此类
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MP_COUNT_FOR_VICTORY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 多人游戏内计入胜负判断 <br>
+          多人游戏内计入胜负判断，疑似无用
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="REBUILD_HOLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  重建洞口<br>
+          重建洞口，被用于GLA的建筑，需搭配RebuildHoleBehavior(ra3无此模块)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SCORE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 统计 <br>
+          被计入战后统计
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SCORE_CREATE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 统计 <br>
+          仅将计入战后统计建造相关
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SCORE_DESTROY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 统计 <br>
+          仅将计入战后统计损失相关
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NO_HEAL_ICON" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 没有回血UI <br>
+          没有回血UI
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_RAPPEL" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可绳降<br>
+          可绳降，被用于游骑兵可以从支奴干内绳索降落下来，ra3大概无作用
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="PARACHUTABLE" />
 <xs:enumeration value="CAN_BE_REPULSED" />
-<xs:enumeration value="COMMANDO" />
+<xs:enumeration value="COMMANDO" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 突击队员 <br>
+          突击队员，仅作为标签，未发现实际功能，原版出现于谭雅、百合子、娜塔莎、刽子手
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="IGNORED_IN_GUI" />
-<xs:enumeration value="CRATE" />
-<xs:enumeration value="CAPTURABLE" />
+<xs:enumeration value="CRATE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  板条箱<br>
+          板条箱，拥有该kindof的单位可以被拾取
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAPTURABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可被占领 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="LINKED_TO_FLAG" />
-<xs:enumeration value="CLEARED_BY_BUILD" />
-<xs:enumeration value="SMALL_MISSILE" />
+<xs:enumeration value="CLEARED_BY_BUILD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 建造时清理 <br>
+          可被建筑建造时清理(比如装饰物等)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SMALL_MISSILE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 小型飞弹 <br>
+          小型飞弹，作为抛射体用，武器RequiredAntiMask需要ANTI_SMALL_MISSILE才可攻击此类物体
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="ALWAYS_VISIBLE" />
-<xs:enumeration value="UNATTACKABLE" />
-<xs:enumeration value="MINE" />
-<xs:enumeration value="CAN_PLACE_CHARGE" />
+<xs:enumeration value="UNATTACKABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  无法被攻击<br>
+          无法被攻击，理论应当不受任何武器效果影响，然而在原版因为引擎漏洞还是能被某些特殊武器所攻击
+          （ActivateLinearDamageNugget，ActivateCircularDamageNugget，LineDamageNugget）
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MINE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 地雷 <br>
+          地雷，武器RequiredAntiMask有ANTI_MINE就可攻击此类物体
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_PLACE_CHARGE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可安放炸药 <br>
+          可安放炸药，该单位攻击带有VEHICLE和STRUCTURE标签的单位时，鼠标指针显示为ExplosiveChargeCursor（即谭雅的C4图标）。如果和SNIPER标签同时出现，则鼠标指针显示为CallAirstrikeCursor（即娜塔莎的轰炸图标）。
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="CLASSIFY_ENTIRE_FOOTPRINT" />
-<xs:enumeration value="ALWAYS_SELECTABLE" />
-<xs:enumeration value="WALK_ON_TOP_OF_WALL" />
+<xs:enumeration value="ALWAYS_SELECTABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="WALK_ON_TOP_OF_WALL" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可在围墙上行走 <br>
+          可在围墙上行走(红警3没有该功能)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="DEFENSIVE_WALL" />
-<xs:enumeration value="FS_POWER" />
-<xs:enumeration value="FS_FACTORY" />
-<xs:enumeration value="FS_BASE_DEFENSE" />
-<xs:enumeration value="FS_TECHNOLOGY" />
-<xs:enumeration value="AIRCRAFT_PATH_AROUND" />
+<xs:enumeration value="FS_POWER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 电厂 <br>
+          电厂，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_FACTORY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 工厂 <br>
+          工厂，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_BASE_DEFENSE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  防御塔<br>
+          防御塔，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_TECHNOLOGY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 高科 <br>
+          盟军高科，盟军机场，中立科技建筑使用，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="AIRCRAFT_PATH_AROUND" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#飞行器需要绕过此类物体  <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="LOW_OVERLAPPABLE" />
 <xs:enumeration value="FORCEATTACKABLE" />
-<xs:enumeration value="AUTO_RALLYPOINT" />
-<xs:enumeration value="CAN_CAPTURE" />
-<xs:enumeration value="POWERED" />
-<xs:enumeration value="PRODUCED_AT_HELIPAD" />
-<xs:enumeration value="DRONE" />
-<xs:enumeration value="CAN_SEE_THROUGH_STRUCTURE" />
-<xs:enumeration value="BALLISTIC_MISSILE" />
-<xs:enumeration value="CLICK_THROUGH" />
+<xs:enumeration value="AUTO_RALLYPOINT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以设置集结点 <br>
+          可以设置集结点，可以用队列模式移动
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_CAPTURE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以占领 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="POWERED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  电力不足后会断电<br>
+          电力不足后会断电，拥有此类型物体才能被手动断电(命令与征服3功能)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PRODUCED_AT_HELIPAD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  在直升机坪上生产 <br>
+         如无这条则该物体会固定在四个停机坪骨骼生产出来且未移开前无法制造大于停机坪数量的物体，原版出现于冷冻、双刃、基洛夫上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DRONE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  无人机<br>
+          红警3中此类单位不可被选择操作，但可被攻击点选
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_SEE_THROUGH_STRUCTURE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  跨越建筑射击<br>
+          可以跨越建筑射击。实际效果为具有该KindOf的物体不会阻挡其他单位的视野，如地图内石块障碍物
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BALLISTIC_MISSILE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 弹道飞弹 <br>
+          弹道飞弹，武器RequiredAntiMask需要ANTI_BALLISTIC_MISSILE才可攻击此类物体(已失效)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CLICK_THROUGH" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 点击穿透 <br>
+          未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="SUPPLY_SOURCE_ON_PREVIEW" />
 <xs:enumeration value="PARACHUTE" />
-<xs:enumeration value="GARRISONABLE_UNTIL_DESTROYED" />
+<xs:enumeration value="GARRISONABLE_UNTIL_DESTROYED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 驻扎到直至被摧毁 <br>
+          可以驻扎到直至被摧毁，特指该物体GarrisonContain不会在红血时撤出内部乘员，
+          被用于苏联工兵碉堡
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 
 <!-- If the SkirmishAI has no refineries or no harvesters, it needs to prioritize building those to get some income again. 
      During this time, we restrict it from building most units & structures, so that it keeps its limited funds for the 
 		 things it needs to get back on track. Plus, if we build many structures, we can get a nasty interaction with
 		 raiseEmergencyFunds(), where we build a structure and then immediately sell it off. -->
-<xs:enumeration value="SKIRMISH_AI_CAN_BUILD_DURING_EMERGENCY_NO_INCOME" />
-<xs:enumeration value="IMMUNE_TO_CAPTURE" />
+<xs:enumeration value="SKIRMISH_AI_CAN_BUILD_DURING_EMERGENCY_NO_INCOME" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# AI可以在没钱的时候建造 <br>
+          AI可以在没钱的时候建造，或者在没钱的时候优先制造。
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="IMMUNE_TO_CAPTURE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#无法被占领  <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="HULK" />
-<xs:enumeration value="CAN_PLACE_MANIPULATOR" />
-<xs:enumeration value="DONT_SUBMERGE_BY_WAVES" />
-<xs:enumeration value="CANNOT_BUILD_NEAR_SUPPLIES" />
+<xs:enumeration value="CAN_PLACE_MANIPULATOR" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可放置操纵器  <br>
+          可放置操纵器，被用于心控单位，不确定是否有硬编码作用
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DONT_SUBMERGE_BY_WAVES" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  不被海浪淹没<br>
+          不被海浪淹没，出现于苏联工兵，用途不明
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CANNOT_BUILD_NEAR_SUPPLIES" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 不可建造在补给站附近 <br>
+          不可建造在补给站附近(红警3没有补给站)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="SUPPLY_SOURCE" />
-<xs:enumeration value="REVEAL_TO_ALL" />
-<xs:enumeration value="DISGUISER" />
-<xs:enumeration value="INERT" />
-<xs:enumeration value="IGNORES_SELECT_ALL" />
+<xs:enumeration value="REVEAL_TO_ALL" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  将视野暴露给所有人<br>
+          将视野暴露给所有人，暴露的视野等同于ShroudClearingRange
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DISGUISER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 伪装者 <br>
+          伪装者，该单位攻击时永远显示DisguiseCursor指针，优先级高于CAN_PLACE_CHARGE
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="INERT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 不参与互动 <br>
+          不参与互动，也会让此物体的lua失效
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="IGNORES_SELECT_ALL" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  忽视全部选择<br>
+          忽视全部选择，特指选择所有部队快捷键Q，被用于工兵、MCV、矿车、纳米核心、扩展车、各种协议飞机、时间炸弹、魔导书
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="DONT_AUTO_CRUSH_INFANTRY" />
-<xs:enumeration value="SIEGE_TOWER" />
-<xs:enumeration value="TIME_BOMB" />
-<xs:enumeration value="ROCK" />
-<xs:enumeration value="THROWN_OBJECT" />
+<xs:enumeration value="SIEGE_TOWER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  围攻塔<br>
+          原版没有被使用但可以拿来用的
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="TIME_BOMB" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  时间炸弹<br>
+          时间炸弹，显示LifeTime，可能会因为bug导致不显示
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ROCK" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 岩石 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="THROWN_OBJECT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  被投掷物<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="GRAB_AND_KILL" />
-<xs:enumeration value="OPTIMIZED_PROP" />
+<xs:enumeration value="OPTIMIZED_PROP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  高级道具<br>
+          高级道具。拥有该kindof的单位没有血条，无法被选中，无法被攻击，不参与大部分互动。
+          出现于大部分可被碾压或者撞碎的地图物体，如小块岩石，桌椅等。
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="ENVIRONMENT" />
 <xs:enumeration value="DEFLECT_BY_SPECIAL_POWER" />
 <xs:enumeration value="WORKING_PASSENGER" />
 <xs:enumeration value="BASE_FOUNDATION" />
 <xs:enumeration value="NEED_BASE_FOUNDATION" />
 <xs:enumeration value="REACT_WHEN_SELECTED" />
-<xs:enumeration value="CAN_BE_CAPTURED" />
-<xs:enumeration value="IGNORED_IN_FINDPOSITIONAROUND" />
-<xs:enumeration value="HORDE" />
-<xs:enumeration value="COMBO_HORDE" />
-<xs:enumeration value="NONOCCLUDING" />
-<xs:enumeration value="NO_FREEWILL_ENTER" />
-<xs:enumeration value="TIBERIUM_FIELD" />
-<xs:enumeration value="BEAM_TARGET" />
-<xs:enumeration value="BEAM_TARGET_REFLECTOR" />
+<xs:enumeration value="CAN_BE_CAPTURED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以被占领 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="IGNORED_IN_FINDPOSITIONAROUND" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 被用于纳米虫群物体，作用不明 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HORDE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  小队<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="COMBO_HORDE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 组合小队 <br>
+          被用于bfme1的两种小队结合所产生的新小队
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NONOCCLUDING" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 无遮蔽 <br>
+          无遮蔽，有此类型物体即便是建筑或载具步兵也不会显示点选外轮廓，被用于部分平民障碍物和磁暴围墙
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NO_FREEWILL_ENTER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  禁止随意进入<br>
+          禁止随意进入，尽管此物体有容器却也不允许其他物体主动进入，
+          被用于巨鹰巨魔这类主动抓取物体塞进自身容器的单位，可通过ocl塞入其中
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="TIBERIUM_FIELD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  泰矿矿区<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BEAM_TARGET" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  光束目标<br>
+          BeamSpecialAbilityUpdate技能聚合时出现的单位，需要配合BeamTargetBehavior
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BEAM_TARGET_REFLECTOR" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  光束目标反射器<br>
+          可以被BeamSpecialAbilityUpdate技能折射
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="TACTICAL_MARKER" />
-<xs:enumeration value="PATH_THROUGH_EACH_OTHER" />
+<xs:enumeration value="PATH_THROUGH_EACH_OTHER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  寻路时无视所有友军<br>
+          寻路时无视所有友军，当单位数量过多时多余单位会聚集在一个点上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="NOTIFY_OF_PREATTACK" />
-<xs:enumeration value="GARRISON" />
-<xs:enumeration value="MELEE_HORDE" />
+<xs:enumeration value="GARRISON" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 驻防地 <br>
+          驻防地，被用于民房、工兵碉堡等可进驻建筑，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MELEE_HORDE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 近战小队 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="BASE_SITE" />
 <xs:enumeration value="INERT_SHROUD_REVEALER" />
 <xs:enumeration value="OCL_BIT" />
-<xs:enumeration value="SPELL_BOOK" />
+<xs:enumeration value="SPELL_BOOK" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  魔法书 <br>
+          魔法书，用于玩家释放协议，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="DEPRECATED" />
-<xs:enumeration value="PATH_THROUGH_INFANTRY" />
+<xs:enumeration value="PATH_THROUGH_INFANTRY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  寻路时无视步兵<br>
+          寻路时无视步兵，当单位数量过多时多余单位会聚集在一个点上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="NO_FORMATION_MOVEMENT" />
 <xs:enumeration value="NO_BASE_CAPTURE" />
 <xs:enumeration value="ARMY_SUMMARY" />
-<xs:enumeration value="CIVILIAN_UNIT" />
-<xs:enumeration value="NOT_AUTOACQUIRABLE" />
+<xs:enumeration value="CIVILIAN_UNIT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  平民单位<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NOT_AUTOACQUIRABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 不被主动索敌 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="KEEP_CLASSIFIED_WHEN_DEAD" />
 <xs:enumeration value="CHUNK_VENDOR" />
-<xs:enumeration value="REFINERY" />
-<xs:enumeration value="MOVE_ONLY" />
-<xs:enumeration value="FS_CASH_PRODUCER" />
+<xs:enumeration value="REFINERY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  矿场<br>
+          矿场，此类物体作为建筑时会屏蔽建造九宫格，支持矿车倒矿，需同时拥有QueueBonePrefix骨骼，
+          否则矿车尝试前去倒矿时游戏会崩溃
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MOVE_ONLY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  只能移动<br>
+          当和SELECTABLE标签同时出现时，使单位仅能被“半选中”（见UNSELECTABLE状态说明）
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_CASH_PRODUCER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  造币厂<br>
+          造币厂，并不指油井，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="ROCK_VENDOR" />
 <xs:enumeration value="BLOCKING_GATE" />
-<xs:enumeration value="CRANE" />
+<xs:enumeration value="CRANE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  起重机<br>
+          起重机，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="AI_NEEDS_PLAYER_POWER_UPDATE"/>
 <xs:enumeration value="MINE_TRIGGER" />
 <xs:enumeration value="BUFF" />
-<xs:enumeration value="GRAB_AND_DROP" />
-<xs:enumeration value="TRANSFORMER" />
-<xs:enumeration value="SCARY" />
+<xs:enumeration value="GRAB_AND_DROP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可被抓取然后扔下<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="TRANSFORMER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  变形器<br>
+          变形器，搭配TRANSFORMATION_TOGGLE_STATE状态可切换文本，原版出现于天狗、VX机甲、海翼
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SCARY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <!-- Normally, the AI will not unpack eggs (a.k.a. unfurl nanocores) too close to the conyard entrance, to avoid boxing itself in.
      This KINDOF overrides that behavior and allows the egg to unpack anywhere. Mostly for refinery eggs so that we don't
 		 block ourselves from taking ore nodes which are close to the conyard entrance -->
-<xs:enumeration value="AI_CAN_UNPACK_NEAR_CONYARD" /> 
-<xs:enumeration value="BROADCASTS_INVISIBILITY" />
-<xs:enumeration value="CAN_ATTACK_WALLS" />
-<xs:enumeration value="IGNORE_FOR_VICTORY" />
+<xs:enumeration value="AI_CAN_UNPACK_NEAR_CONYARD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 展开到基地周围<br>
+          AI可以将该单位展开到基地周围
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration> 
+<xs:enumeration value="BROADCASTS_INVISIBILITY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 范围隐形 <br>
+          范围隐形，被用于命令与征服3Nod干扰塔，推测可关联BroadcastRange将隐形范围以防御塔射程方式显示出来(待确认)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_ATTACK_WALLS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以攻击围墙 <br>
+          可以攻击围墙，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="IGNORE_FOR_VICTORY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 忽略胜利检测 <br>
+          忽略胜利检测，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="DO_NOT_CLASSIFY" />
 <xs:enumeration value="WALL_UPGRADE" />
-<xs:enumeration value="ACTIVATE_AFTER_UNPACK" />
+<xs:enumeration value="ACTIVATE_AFTER_UNPACK" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  展开后生效<br>
+          展开后生效，该建筑建造后需要完全走完StructureUnpackUpdate中的UnpackTime才生效，
+          常见于苏联帝国等战场展开的阵营建筑
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="SKIRMISH_AI_DONT_MULTI_TARGET" />
-<xs:enumeration value="NOT_SELLABLE" />
-<xs:enumeration value="WALL_PIECE" />
-<xs:enumeration value="WALL_HUB" />
-<xs:enumeration value="BUILD_FOR_FREE" />
+<xs:enumeration value="NOT_SELLABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 不可被出售 <br>
+          不可被出售，此类建筑无法被执行出售操作
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="WALL_PIECE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  围墙片段<br>
+          围墙片段，特指红警3的围墙；拥有该KindOf的建筑在展开时不会阻挡单位武器视野
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="WALL_HUB" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  围墙中枢<br>
+          围墙中枢，被用于命令与征服3和中土战争2的围墙建造中枢
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BUILD_FOR_FREE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 免费制造 <br>
+          免费制造，此类物体生产BuildCost为0，且建造速度翻倍[且UI显示造价为TOOLTIP:CostFree(已失效)]
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="IGNORE_FOR_EVA_SPEECH_POSITION" />
-<xs:enumeration value="WORLDBUILDER_SNAP_TO_GRID"/>			
-<xs:enumeration value="BANNER" />
-<xs:enumeration value="UNPACKS_INTO_BUILDING" />
-<xs:enumeration value="ORE_NODE" />
-<xs:enumeration value="PASS_EXPERIENCE_TO_SLAVER" />
-<xs:enumeration value="HAS_HEALTH_BAR" />
-<xs:enumeration value="IGNORE_IN_AI_HUNT_TACTIC" />
-<xs:enumeration value="DEPLOYED_MINE" />
-<xs:enumeration value="CANNOT_RETALIATE" />
-<xs:enumeration value="CREEP" />
+<xs:enumeration value="WORLDBUILDER_SNAP_TO_GRID">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 地编内捕捉到网格 <br>
+          地编内捕捉到网格，效果待测试，出现于路段、悬崖围墙
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>			
+<xs:enumeration value="BANNER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 扛旗手 <br>
+          扛旗手，小队功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="UNPACKS_INTO_BUILDING" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可展开成建筑<br>
+          可展开成建筑，原版出现于三方MCV、纳米核心、盟军矿车、苏联蛋蛋车
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ORE_NODE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 矿脉节点 <br>
+          矿脉节点
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PASS_EXPERIENCE_TO_SLAVER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 将经验传递给子体 <br>
+          将经验传递给子体，当前物体无法为自身获得经验
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HAS_HEALTH_BAR" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 拥有血条 <br>
+          拥有血条，可让没有可选择物体显示血条
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="IGNORE_IN_AI_HUNT_TACTIC" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  不会被地编的Hunt脚本锁定<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DEPLOYED_MINE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  已部署的地雷<br>
+          已部署的地雷，被用于艾辛格地雷被放置后的物体
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CANNOT_RETALIATE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 不可反击 <br>
+          不可反击，该单位即便被其他单位攻击也不会主动还手，不确定是否有效
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CREEP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  野怪<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="POWERED_POWERS_ONLY" />
 <xs:enumeration value="VITAL_FOR_BASE_SURVIVAL" />
-<xs:enumeration value="DO_NOT_PICK_ME_WHEN_BUILDING" />
-<xs:enumeration value="SUMMONED" />
-<xs:enumeration value="HIDE_IF_FOGGED" />
-<xs:enumeration value="ALWAYS_SHOW_HOUSE_COLOR" />
-<xs:enumeration value="MOVE_FOR_NOONE" />
-<xs:enumeration value="WB_DISPLAY_SCRIPT_NAME" />
-<xs:enumeration value="CAN_CLIMB_WALLS" />
-<xs:enumeration value="NO_SHADOW" />
+<xs:enumeration value="DO_NOT_PICK_ME_WHEN_BUILDING" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SUMMONED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  召唤物<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HIDE_IF_FOGGED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 在迷雾内隐藏 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ALWAYS_SHOW_HOUSE_COLOR" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  总是展示阵营色<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MOVE_FOR_NOONE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  单位主动寻找矿脉并移动<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="WB_DISPLAY_SCRIPT_NAME" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  在地编中显示它的EditorName，常用于音效物体<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_CLIMB_WALLS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以爬墙 <br>
+          未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NO_SHADOW" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  没有阴影<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="LARGE_RECTANGLE_PATHFIND" />
-<xs:enumeration value="SUBMARINE" />
-<xs:enumeration value="PORT" />
-<xs:enumeration value="WALL_SEGMENT" />
-<xs:enumeration value="SIMPLE_OBJECT_PROP" />
-<xs:enumeration value="SHIP" />
+<xs:enumeration value="SUBMARINE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 潜艇 <br>
+          潜艇，此类物体在上浮前敌方雷达不会显示、EVA不会警报，
+          原版出现于长枪潜艇、海翼、阿库拉
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PORT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 港口，起义被用于船厂 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="WALL_SEGMENT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  围墙片段<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SIMPLE_OBJECT_PROP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 简单道具<br>
+          简单道具。拥有该kindof的单位没有血条，无法被选中，无法被攻击，不参与大部分互动。
+          用于可被推倒的地图物体，如树木和路灯。
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SHIP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  船只<br>
+          船只，允许单位进驻且没有SHIP的非两栖水上运输单位会引发寻路BUG，
+          原版出现于海豚、水翼船、航母、薙刀、将军舰、无畏舰
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="OPTIMIZED_SOUND" />
-<xs:enumeration value="PASS_EXPERIENCE_TO_CONTAINED" />
+<xs:enumeration value="PASS_EXPERIENCE_TO_CONTAINED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  将经验传递给乘客<br>
+          将经验传递给乘客，当前物体无法为自身获得经验
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="DOZER_FACTORY" />
 <xs:enumeration value="THREAT_FINDER" />
-<xs:enumeration value="ECONOMY_STRUCTURE" />
+<xs:enumeration value="ECONOMY_STRUCTURE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 经济建筑 <br>
+          经济建筑，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <!-- Some ShieldSphereUpdates don't stop allied projectiles. This kindof on a projectile overrides that and 
      forces the projectile to be affected by the shield -->
-<xs:enumeration value="ALWAYS_COLLIDE_WITH_OWN_SHIELD_SPHERES" />
-<xs:enumeration value="CAN_TOPPLE" />
-<xs:enumeration value="CYCLE_SELECTION" />
+<xs:enumeration value="ALWAYS_COLLIDE_WITH_OWN_SHIELD_SPHERES" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  己方的雅典娜护盾有作用<br>
+          对己方的雅典娜护盾有作用，用在女神轰炸机的炸弹上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_TOPPLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可以被推翻<br>
+          可以被推翻，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CYCLE_SELECTION" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可被循环选择<br>
+          可被循环选择，特指跳至下一个支援部队快捷键N
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="CAN_SKIP_SHADOW" />
-<xs:enumeration value="SCALEABLE_WALL" />
-<xs:enumeration value="SKYBOX" />
+<xs:enumeration value="SCALEABLE_WALL" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可被攀爬围墙(已变动)<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SKYBOX" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 天空盒 <br>
+          天空盒(没有效果)
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="WALL_GATE" />
 <xs:enumeration value="CAPTUREFLAG" />
-<xs:enumeration value="CANNOT_STOP_ON_WATER" />
-<xs:enumeration value="PASS_EXPERIENCE_TO_CONTAINER" />
-<xs:enumeration value="RESIST_EMP" />
-<xs:enumeration value="ORIENTS_TO_CAMERA" />
+<xs:enumeration value="CANNOT_STOP_ON_WATER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          未发现实际功能
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PASS_EXPERIENCE_TO_CONTAINER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  将经验传递给容器<br>
+          将经验传递给容器，当前物体无法为自身获得经验
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="RESIST_EMP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  免疫EMP<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ORIENTS_TO_CAMERA" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 模型始终朝向相机 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="NEVER_CULL_FOR_MP" />
-<xs:enumeration value="DONT_USE_CANCEL_BUILD_BUTTON" />
-<xs:enumeration value="CIVILIAN_BUILDING" />
+<xs:enumeration value="DONT_USE_CANCEL_BUILD_BUTTON" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CIVILIAN_BUILDING" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 平民建筑 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="HEAVY_MELEE_HITTER" />
-<xs:enumeration value="DONT_HIDE_IF_FOGGED" />
-<xs:enumeration value="VEHICLE" />
-<xs:enumeration value="HARVESTABLE" />
-<xs:enumeration value="GRABBABLE" />
-<xs:enumeration value="CONSTRUCTION_YARD" />
-<xs:enumeration value="CAN_SHOOT_OVER_WALLS" />
-<xs:enumeration value="PASS_EXPERIENCE_TO_PRODUCER" />
+<xs:enumeration value="DONT_HIDE_IF_FOGGED" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  不在战争迷雾内消失<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="VEHICLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  载具<br>
+          载具，进入容器时无法转动
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HARVESTABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可被采集 <br>
+          可被采集，指散矿而非红警3的矿脉
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="GRABBABLE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 可被抓取 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CONSTRUCTION_YARD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  建造工场<br>
+          建造工场，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_SHOOT_OVER_WALLS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PASS_EXPERIENCE_TO_PRODUCER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          将经验传递给母体，当前物体无法为自身获得经验
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="EXPANSION_PAD" />
-<xs:enumeration value="AMPHIBIOUS" />
-<xs:enumeration value="SHOW_BEHIND_OCCLUDERS" />
-<xs:enumeration value="FS_MONEY_STORAGE" />
-<xs:enumeration value="VALID_TARGET_FOR_C4" />
-<xs:enumeration value="UNIQUE_UNIT" />
+<xs:enumeration value="AMPHIBIOUS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 两栖 <br>
+          两栖，在单位按钮、肖像和介绍文本上显示两栖标签，
+          原版出现于狗、间谍、谭雅、ACV、驱逐舰、核心、忍者、百合子、迅雷、天狗、
+          海啸、大迅雷、刽子手、熊、娜塔莎、蜘蛛、蛋蛋车、牛蛙、磁暴艇、三方工兵、
+          三方矿车、三方 MCV
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SHOW_BEHIND_OCCLUDERS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  显示遮蔽体<br>
+          显示遮蔽体，有此类型物体即便不是建筑或载具步兵也会显示点选外轮廓，被用于磁力卫星
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_MONEY_STORAGE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 金库 <br>
+          金库，配合DistributedMoney存储资金，不确定是否有硬编码作用
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="VALID_TARGET_FOR_C4" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# C4的有效目标 <br>
+          可作为C4的有效目标，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="UNIQUE_UNIT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  独特单<br>
+          独特单位，无法使用Shift键建造，且当前玩家拥有一个后就锁定建造
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="SURPRISE_ATTACKER" />
-<xs:enumeration value="COVER" />
-<xs:enumeration value="INFILTRATOR" />
-<xs:enumeration value="BRIDGE_SEGMENT" />
-<xs:enumeration value="FS_WAR_FACTORY" />
-<xs:enumeration value="FS_BARRACKS" />
-<xs:enumeration value="FS_RADAR" />
-<xs:enumeration value="FS_AIR_FIELD" />
-<xs:enumeration value="FS_TECH_CENTER" />
-<xs:enumeration value="TIBERIUM_BASED"/>
-<xs:enumeration value="TIBERIUM"/>
+<xs:enumeration value="COVER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 掩体 <br>
+          掩体，可被有FindCoverBehavior的单位搜索到并靠近处于掩护状态，
+          红警3中FindCoverBehavior只在默认状态机下生效
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="INFILTRATOR" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  渗透者<br>
+          渗透者，仅作为标签，未发现实际功能，原版出现于间谍、忍者
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BRIDGE_SEGMENT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 桥梁片段 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_WAR_FACTORY" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  重工<br>
+          重工、船厂，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_BARRACKS" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 兵营 <br>
+          兵营，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_RADAR" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 雷达 <br>
+          雷达，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_AIR_FIELD" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 机场 <br>
+          机场，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FS_TECH_CENTER" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  科技中心<br>
+          科技中心，苏联高科使用，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="TIBERIUM_BASED">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  泰基生物<br>
+          泰基生物，被用于催化飞弹和泰矿扫描的目标，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="TIBERIUM">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  泰伯利亚矿<br>
+          泰伯利亚矿，失去碰撞体积，只可被单选，不会被主动索敌，不会有建筑后阴影Shader
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="CAN_ATTACK_STEALTHED"/>
-<xs:enumeration value="IMMUNE_TO_CYCLONIC_SHOCKWAVE"/>
+<xs:enumeration value="IMMUNE_TO_CYCLONIC_SHOCKWAVE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#   免疫旋风冲击<br>
+          免疫旋风冲击，作用不明，推测用以免疫MetaImpactNugget中有CyclonicFactor的部分
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="CANNOT_BE_DETECTED"/>
-<xs:enumeration value="AUTO_ACQUIRABLE_BY_AI"/>
-<xs:enumeration value="CRUSHABLE_OBSTACLE"/>
-<xs:enumeration value="NEUTRAL_TECH"/>
-<xs:enumeration value="SUPER_WEAPON"/>
-<xs:enumeration value="IGNORE_CAN_NOT_BUILD"/>
-<xs:enumeration value="SKIRMISH_AI_DONT_CONSIDER_THREAT"/>
-<xs:enumeration value="SKIRMISH_AI_DONT_GARRISON"/>
-<xs:enumeration value="SKIRMISH_AI_DONT_REPAIR"/>
-<xs:enumeration value="SKIRMISH_AI_ATTEMPT_TO_DODGE"/>
-<xs:enumeration value="ASSAULT_AIRCRAFT"/>
-<xs:enumeration value="BOMBER_AIRCRAFT"/>
-<xs:enumeration value="FIGHTER_AIRCRAFT"/>
-<xs:enumeration value="ANTI_GARRISON"/>
-<xs:enumeration value="ENGINEER"/>
-<xs:enumeration value="EXPANSION_UNIT"/>
-<xs:enumeration value="EGG"/>
-<xs:enumeration value="OUTPOST"/>
-<xs:enumeration value="BEACON"/>
-<xs:enumeration value="HUSK"/>
+<xs:enumeration value="AUTO_ACQUIRABLE_BY_AI">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  无法被AI主动索敌<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CRUSHABLE_OBSTACLE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可被碾压障碍物<br>
+          可被碾压障碍物，需要单位运动器的Surfaces里有CRUSHABLE_OBSTACLE才可通过
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="NEUTRAL_TECH">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 中立科技建筑 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SUPER_WEAPON">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  超级武器<br>
+          超级武器，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="IGNORE_CAN_NOT_BUILD">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SKIRMISH_AI_DONT_CONSIDER_THREAT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# AI不会偷袭这个单位 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SKIRMISH_AI_DONT_GARRISON">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  AI不会让该单位进驻<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SKIRMISH_AI_DONT_REPAIR">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  AI不会维修该单位<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SKIRMISH_AI_ATTEMPT_TO_DODGE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  AI躲避该单位，需要同时设置SkirmishAIInformation模块，否则会崩溃<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ASSAULT_AIRCRAFT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  突击机<br>
+          突击机，仅作为标签，未发现实际功能，原版出现于维护者、双刃、战役总统直升机上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BOMBER_AIRCRAFT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 轰炸机 <br>
+          轰炸机，仅作为标签，未发现实际功能，原版出现于世纪、基洛夫、战役伞兵世纪上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="FIGHTER_AIRCRAFT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  战斗机<br>
+          战斗机，仅作为标签，未发现实际功能，原版出现于阿波罗、米格上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ANTI_GARRISON">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  自动使用清理驻军鼠标<br>
+          (在红警3中会生成一个未知玩家分队导致游戏崩溃)
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ENGINEER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 工程师 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="EXPANSION_UNIT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 扩展单位 <br>
+          扩展单位，目前仅通过盟军矿车发现有某种功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="EGG">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 纳米核心 <br>
+          纳米核心，会在UI中展示展开的建筑耗费的电量，如果可以展开成多种建筑显示的电量将会叠加
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="OUTPOST">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 前哨基地 <br>
+          前哨基地，当此类建筑范围内有其他建造范围时AI会对此建筑执行出售
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BEACON">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  信标<br>
+          信标，可以按Del删除
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="HUSK">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  机甲残骸<br>
+          机甲残骸，指可进入工兵修复的那种，可能无特殊作用
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="IGNORE_FORCE_MOVE"/>	<!--Hack to make commando's unable to force move-->
-<xs:enumeration value="LINE_OF_SIGHT_IGNORES_BUILDINGS"/>
-<xs:enumeration value="AIRCRAFT_TRANSPORT_ONLY_GARRISONABLE_WHILE_PARKED"/>
-<xs:enumeration value="SNIPER"/>
-<xs:enumeration value="ATTACK_FROM_STRUCTURE_ONLY_WHEN_GARRISONED"/>
+<xs:enumeration value="LINE_OF_SIGHT_IGNORES_BUILDINGS">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  跨建筑射击<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="AIRCRAFT_TRANSPORT_ONLY_GARRISONABLE_WHILE_PARKED">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  只有停在机场时可以被进驻<br>
+          世纪轰炸机有，单位只有停在机场时可以被进驻，因为这个kindof导致世纪轰炸机的运输模块自带单位效果失效
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SNIPER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  狙击手<br>
+          狙击手，当和CAN_PLACE_CHARGE标签同时出现时，攻击车辆和建筑的鼠标指针变为娜塔莎的轰炸指针。
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ATTACK_FROM_STRUCTURE_ONLY_WHEN_GARRISONED">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          被用于命令与征服3Nod狂热分子，用途不明
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="SKIP_DEFECT_IF_UNCOMBINED" />
 <xs:enumeration value="SKIP_IDLE_WHEN_CAPTURED" />
-<xs:enumeration value="BRIDGE_ENDCAP" />
-<xs:enumeration value="BRIDGE_GATEHOUSE" />
-<xs:enumeration value="CAN_BE_FAVORITE_UNIT" />
-<xs:enumeration value="SLAVE_OWNER"/>
-<xs:enumeration value="MCV"/>
-<xs:enumeration value="CAN_HEAL_ALLIES"/>
-<xs:enumeration value="PROJECT_BUILDABILITY_FOR_ALLIES"/>
-<xs:enumeration value="CAN_NOT_BUILD_ON_LAND"/>
-<xs:enumeration value="CAN_BUILD_ON_WATER"/>
-<xs:enumeration value="CAN_BUILD_ON_DEEP_WATER"/>
-<xs:enumeration value="LIMITED_PRODUCTION_AIRCRAFT"/>
-<xs:enumeration value="LEAVE_PARKING_ON_BUILD_COMPLETE"/>
-<xs:enumeration value="ENCLOSURE"/>
+<xs:enumeration value="BRIDGE_ENDCAP" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 桥梁两端 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="BRIDGE_GATEHOUSE" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 桥梁小屋 <br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_BE_FAVORITE_UNIT" >
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 最喜爱的单位<br>
+          最喜爱的单位，疑似与AI搭配
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="SLAVE_OWNER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 奴隶主 <br>
+          奴隶主，被用于命令与征服3星突母舰，推测与它所slave的物体有关，作用不明
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="MCV">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  基地车<br>
+          基地车，此类物体被百合子举起时瘫痪类型是HELD，因此仍可移动
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_HEAL_ALLIES">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可以治疗友军<br>
+          可以治疗友军，仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="PROJECT_BUILDABILITY_FOR_ALLIES">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  允许友军在其附近建造<br>
+          允许友军在其附近建造，被用于命令与征服3三个大本，友军只能共用这三个建筑的扩展范围，
+          红警3已允许所有扩展建造范围共享
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_NOT_BUILD_ON_LAND">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  无法建造在陆地上，被用于船厂<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_BUILD_ON_WATER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可以建造在Water范围内<br>
+          可以建造在Water范围内，但是如果只有CAN_BUILD_ON_DEEP_WATER没有CAN_BUILD_ON_WATER则该建筑不占用格子
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CAN_BUILD_ON_DEEP_WATER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可以建造在Deep Water范围内<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="LIMITED_PRODUCTION_AIRCRAFT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  生产被限制的飞行器<br>
+          生产被限制的飞行器，指需要停机位的那些战机，原版出现于维护者、阿波罗、世纪、米格、战役总统直升机、战役伞兵世纪上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="LEAVE_PARKING_ON_BUILD_COMPLETE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  建造完成后离开停机坪<br>
+          建造完成后离开停机坪，否则会停在机场正上方，如果加给上一条那些飞机会导致它们造好后直接起飞，原版出现于冷冻、双刃、基洛夫上
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ENCLOSURE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  出现于纳米虫群物体<br>
+          出现于纳米虫群物体，推测与EncloseBehavior模块有关，作用不明
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="RADAR_SCRAMBLER"/>
-<xs:enumeration value="CANNOT_HIJACK"/>
-<xs:enumeration value="CRUSHABLE_BUILDING"/>
-<xs:enumeration value="CRUSH_CRUSHABLE_BUILDINGS"/>
-<xs:enumeration value="GRANTS_VETERANCY"/>
-<xs:enumeration value="ALWAYS_VISIBLE_IN_RADAR"/>
-<xs:enumeration value="ATTACH_ATTACK"/>
-<xs:enumeration value="DONT_UNATTACH_WHEN_HEALING"/>
-<xs:enumeration value="T1_UNIT"/>
-<xs:enumeration value="T2_UNIT"/>
-<xs:enumeration value="T3_UNIT"/>
-<xs:enumeration value="DEBRIS"/>
-<xs:enumeration value="DONT_DESTROY_IF_ON_BRIDGE"/>
-<xs:enumeration value="CARPET_BOMBER"/>
+<xs:enumeration value="CANNOT_HIJACK">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  不可劫持<br>
+          不可劫持，红警3特指该步兵不可去占领被狙击驾驶的单位，出现于狗、熊、海豚、蜘蛛
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CRUSHABLE_BUILDING">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  可以被碾压的建筑<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CRUSH_CRUSHABLE_BUILDINGS">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  碾压建筑物<br>
+          当前单位寻路将CRUSHABLE_BUILDING视为可通行区域
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="GRANTS_VETERANCY">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 赋予等级 <br>
+          赋予等级，被用于精兵学院，作用不明
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ALWAYS_VISIBLE_IN_RADAR">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 总是显示在雷达上 <br>
+          
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="ATTACH_ATTACK">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		# 吸附攻击 <br>
+          吸附攻击，拥有此类型物体在其吸附母体死亡于空中后会以伞降的形式落回地面，被用于蜘蛛
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DONT_UNATTACH_WHEN_HEALING">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  无需吸附也可治疗<br>
+          无需吸附也可治疗，被用于中立机场、车库、干船坞，作用不明
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="T1_UNIT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  T1单位<br>
+          原版没有被使用但可以拿来用的，仅作为标签，未发现实际功能，
+          原版被用来对磁力卫星协议进行修正，决定不同等级卫星能吸起不同类型载具
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="T2_UNIT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          原版守护者、雅典娜、驱逐舰、海啸、波能、薙刀、铁锤、V4、阿库拉以及三方矿车使用，
+          仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="T3_UNIT">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  <br>
+          原版幻影、世纪、航母、鬼王、将军、天启、基洛夫、无畏以及三方MCV使用，
+          仅作为标签，未发现实际功能
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DEBRIS">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  死亡碎片<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="DONT_DESTROY_IF_ON_BRIDGE">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  如果该单位在桥梁上，当桥梁死亡时该单位不会死亡<br>
+          
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
+<xs:enumeration value="CARPET_BOMBER">
+	<xs:annotation><xs:documentation xml:Language="zh-Hans">
+		<![CDATA[
+		#  地毯式轰炸机<br>
+          地毯式轰炸机，被用于基洛夫，不会因为射程过短而无法朝脚下开火
+
+          ]]>
+	</xs:documentation></xs:annotation>	
+</xs:enumeration>
 <xs:enumeration value="TERRAIN_LIKE_GROUND_OBJECT"/>
 <!-- LOOK FOR OBSOLETE ENTRIES TO REPLACE BEFORE ADDING NEW ONES -->
 <!-- Be aware that these are saved - as integers! - in .map files. (Look at Parameter::KIND_OF_PARAM if you don't believe me.)
